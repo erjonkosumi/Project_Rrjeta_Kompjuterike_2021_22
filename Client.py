@@ -44,3 +44,23 @@ def write():
     while True:
         if stop_thread:
             break
+# Getting Messages
+        message = f'{nickname}: {input("")}'
+        if message[len(nickname) + 2:].startswith('/'):
+            if nickname == 'admin':
+                if message[len(nickname) + 2:].startswith('/kick'):
+                    # 2 for : and whitespace and 6 for /KICK_
+                    client.send(f'KICK {message[len(nickname) + 2 + 6:]}'.encode('ascii'))
+                elif message[len(nickname) + 2:].startswith('/ban'):
+                    # 2 for : and whitespace and 5 for /BAN
+                    client.send(f'BAN {message[len(nickname) + 2 + 5:]}'.encode('ascii'))
+            else:
+                print("Commands can be executed by Admins only !!")
+        else:
+            client.send(message.encode('ascii'))
+
+
+recieve_thread = threading.Thread(target=receive)
+recieve_thread.start()
+write_thread = threading.Thread(target=write)
+write_thread.start()
