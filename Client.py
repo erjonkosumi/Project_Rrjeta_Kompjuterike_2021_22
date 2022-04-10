@@ -2,12 +2,14 @@ import socket
 import threading
 
 nickname = input("Choose Your Nickname:")
+#Promt client te jep adresen IP, nese nuk ka specifike i tregohet default(serveri yne)
+host=input("Jepni IP adresen lokale(default:127.0.0.1): ")
 if nickname == 'admin':
     password = input("Enter Password for Admin:")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Connect to a host
-client.connect(('127.0.0.1', 5555))
+client.connect((host, 5555))
 
 stop_thread = False
 
