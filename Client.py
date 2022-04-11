@@ -8,7 +8,7 @@ if nickname == 'admin':
     password = input("Enter Password for Admin:")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# Connect to a host
+# Qasja tek hosti
 client.connect((host, 5555))
 
 stop_thread = False
@@ -29,7 +29,7 @@ def receive():
                     if client.recv(1024).decode('ascii') == 'REFUSE':
                         print("Connection is Refused !! Wrong Password")
                         stop_thread = True
-                # Clients those are banned can't reconnect
+                # Klientet te cilat jane ne ban list, nuk kan mundesi qasje serish ne server.
                 elif next_message == 'BAN':
                     print('Connection Refused due to Ban')
                     client.close()
@@ -51,10 +51,10 @@ def write():
         if message[len(nickname) + 2:].startswith('/'):
             if nickname == 'admin':
                 if message[len(nickname) + 2:].startswith('/kick'):
-                    # 2 for : and whitespace and 6 for /KICK_
+                    # 2 per : dhe spacebar dhe 6 per komanden /KICK_
                     client.send(f'KICK {message[len(nickname) + 2 + 6:]}'.encode('ascii'))
                 elif message[len(nickname) + 2:].startswith('/ban'):
-                    # 2 for : and whitespace and 5 for /BAN
+                    # 2 per : dhe spacebar dhe 5 per komanden /BAN
                     client.send(f'BAN {message[len(nickname) + 2 + 5:]}'.encode('ascii'))
             else:
                 print("Commands can be executed by Admins only !!")
